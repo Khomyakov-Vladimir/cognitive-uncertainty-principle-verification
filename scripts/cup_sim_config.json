@@ -1,0 +1,38 @@
+{
+  "output": {
+    "outdir": "./cup_sim_output",
+    "seed": 20251030
+  },
+  "grid": {
+    "xi": { "type": "log2", "values": [4,8,16,32,64,128,256,512,1024] },
+    "epsilon": { "type": "logspace", "values": [1e-4,3e-4,1e-3,3e-3,1e-2,3e-2,1e-1] }
+  },
+  "synthetic_model": {
+    "n_per_realization": 4096,
+    "realizations_per_cell": 100,
+    "rayleigh": { "scale": 1.0 },
+    "half_normal": { "scale": 0.2 },
+    "jumps": {
+      "lambda_vals": [0.0,0.01,0.05,0.1],
+      "jump_distribution": "pareto",
+      "pareto": { "xm": 1.0, "alpha": 2.5 },
+      "lognormal": { "mu": 0.0, "sigma": 1.5 }
+    }
+  },
+  "estimators": {
+    "bootstrap": { "B_values": [500,1000,2000], "percentile": 5 },
+    "fisher": { "kernel_bandwidth": 0.05 },
+    "kl": { "benford_digits": 1, "safe_log_delta": 1e-12 }
+  },
+  "fitting": {
+    "xi0": 64,
+    "eps0": 0.001,
+    "initial_guesses": { "alpha": 0.1, "beta": 0.1, "p": 1.0, "q": 1.0 },
+    "fit_method": "weighted_nls"
+  },
+  "diagnostics": {
+    "tail_trimming_quantiles": [0.99, 0.975],
+    "save_intermediate": true,
+    "plots": true
+  }
+}
